@@ -18,7 +18,7 @@ app.post("/new", (req, res) => {
     return res.status(400).json({ message: "Description required" });
   }
 
-  const note = NoteModel.create({ name, description });
+  const note = NoteModel.create({ title : name, description });
 
   res.status(201).json({
     message: "Note created successfully",
