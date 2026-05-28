@@ -60,7 +60,6 @@ app.post("/api/notes", async (req, res) => {
  * @description get all notes
  * @access public
  */
-
 app.get("/api/notes", async (req, res) => {
   const notes = await NoteModel.find();
 
@@ -70,6 +69,11 @@ app.get("/api/notes", async (req, res) => {
   });
 });
 
+/**
+ * @requires patch /api/notes/:id
+ * @description update a note by id
+ * @access public
+ */
 app.patch("/api/notes/:id", async (req, res) => {
   const { id } = req.params;
   const { description } = req.body;
@@ -103,6 +107,29 @@ app.patch("/api/notes/:id", async (req, res) => {
   return res.status(200).json({
     message: "Note updated successfully",
     notes,
+  });
+});
+
+/**
+ * @requires delete /api/notes/:id
+ * @description delete a note by id
+ * @access public
+ */
+app.delete("/api/notes/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const notes = await NoteModel.findById(id);
+
+  if (!notes) {
+    return res.status(404).json({
+      message: "Note not found",
+    });
+  }
+
+  await notes.delete();
+
+  return res.status(200).json({
+    message: "Note deleted successfully",
   });
 });
 
