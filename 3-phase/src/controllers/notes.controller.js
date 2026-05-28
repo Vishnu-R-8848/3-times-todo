@@ -1,6 +1,6 @@
 import NoteModel from "../models/notes.models.js";
 
-
+// ---- create a note ----
 export const createNote = async (req, res) => {
   const { title, description } = req.body;
 
@@ -37,6 +37,7 @@ export const createNote = async (req, res) => {
   });
 };
 
+// ---- get all notes ----
 export const getAllNotes = async (req, res) => {
   const notes = await NoteModel.find();
 
@@ -51,6 +52,7 @@ export const getAllNotes = async (req, res) => {
   });
 };
 
+// ---- get a note by id ----
 export const getNoteById = async (req, res) => {
   const { id } = req.params;
   const note = await NoteModel.findById(id);
@@ -66,6 +68,7 @@ export const getNoteById = async (req, res) => {
   });
 };
 
+// ---- update a note by id ----
 export const updateNoteById = async (req, res) => {
   const { id } = req.params;
   const { description } = req.body;
@@ -102,6 +105,7 @@ export const updateNoteById = async (req, res) => {
   });
 };
 
+// ---- delete a note by id ----
 export const deleteNoteById = async (req, res) => {
   const { id } = req.params;
   const deletedNote = await NoteModel.findByIdAndDelete(id);
