@@ -70,6 +70,28 @@ app.get("/api/notes", async (req, res) => {
 });
 
 /**
+ * @requires GET /api/notes/:id
+ * @description get a note by id
+ * @access public
+ */
+app.get("/api/notes/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const notes = await NoteModel.findById(id);
+
+  if (!notes) {
+    return res.status(404).json({
+      message: "Note not found",
+    });
+  }
+
+  return res.status(200).json({
+    message: "Note retrieved successfully",
+    notes,
+  });
+});
+
+/**
  * @requires patch /api/notes/:id
  * @description update a note by id
  * @access public
