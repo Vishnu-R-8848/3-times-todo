@@ -63,6 +63,13 @@ app.post("/api/notes", async (req, res) => {
 app.get("/api/notes", async (req, res) => {
   const notes = await NoteModel.find();
 
+  // ---- if no notes found, return 404 ---- //
+  if (notes.length === 0) {
+    return res.status(404).json({
+      message: "No notes found",
+    });
+  }
+
   return res.status(200).json({
     message: "Notes retrieved successfully",
     notes,
@@ -79,6 +86,7 @@ app.get("/api/notes/:id", async (req, res) => {
 
   const notes = await NoteModel.findById(id);
 
+  // ---- if no note found, return 404 ---- //
   if (!notes) {
     return res.status(404).json({
       message: "Note not found",
