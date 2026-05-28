@@ -30,6 +30,11 @@ export const createNote = async (req, res) => {
     title,
     description,
   });
+
+    return res.status(201).json({
+    message: "Note created successfully",
+    note: newNote,
+  });
 };
 
 export const getAllNotes = async (req, res) => {
