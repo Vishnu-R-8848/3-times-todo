@@ -1,4 +1,5 @@
 import express from "express";
+import NoteModel from "./models/notes.model.js";
 
 const app = express();
 app.use(express.json());
@@ -13,7 +14,7 @@ app.get("/", (req, res) => {
  * @access public
  */
 
-app.post("/api/notes", (req, res) => {
+app.post("/api/notes", async (req, res) => {
   const { title, description } = req.body;
 
   //---- Validation ----//
@@ -42,7 +43,10 @@ app.post("/api/notes", (req, res) => {
   }
 
   // ---- if validation passes, create the note ---- //
-  const note = await null;
+  const note =  await NoteModel.create({
+    title,
+    description,
+  });
 
   return res.status(201).json({
     message: "Note created successfully",
@@ -57,10 +61,13 @@ app.post("/api/notes", (req, res) => {
  * @access public
  */
 
-app.get("/api/notes", (req, res) => {
+app.get("/api/notes", async (req, res) => {
+
+  const notes = await NoteModel.find();
+
   return res.status(200).json({
     message: "Notes retrieved successfully",
-    notes: [], // Replace this with actual notes data
+    notes,
   });
 });
 
